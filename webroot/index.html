@@ -19,13 +19,13 @@
   </head>
   <body ng-controller="ChatRoomCtrl">
     <div class="container-fluid">
-      <div class="row">
+      <div class="row chat-room-heading">
         <div class="col-md-12">
-          <h1>Hello, world!</h1>
+          <h1>{{chatRoom}}</h1>
         </div>
       </div>
-      <div class="row">
-        <div class="col-md-10">
+      <div class="row chat-room-content">
+        <div class="col-md-10 chat-area">
           <div class="chat-history">
             <div class="message" ng-repeat="chatItem in chatHistory">
               <span class="message-user">{{chatItem.username}}:</span> <span class="message-text">{{chatItem.message}}</span>
@@ -35,7 +35,7 @@
           <div class="chat-control">
             <form ng-submit="onSendMessage()">
               <div class="input-group">
-                <input type="text" class="form-control" id="chatMessage" required="required" />
+                <input type="text" class="form-control" id="chatMessage" required="required" placeholder="Type your message here..." />
                 <span class="input-group-btn">
                   <button class="btn btn-success" type="submit">Send</button>
                 </span>
@@ -56,13 +56,12 @@
         </div>
       </div>
     </div>
-    
-     <p>Nothing here {{'yet' + '!'}}</p>
 
     <script src="bower_components/jquery/dist/jquery.min.js"></script>
     <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="bower_components/angular/angular.min.js"></script>
     <script src="bower_components/angular-route/angular-route.min.js"></script>
+    <script src="bower_components/moment/min/moment.min.js"></script>
     <script src="js/app.js"></script>
   </body>
 </html>

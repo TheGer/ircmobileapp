@@ -1,6 +1,10 @@
 var ircApp = angular.module('ircApp', []);
 
 ircApp.controller('ChatRoomCtrl', function ($scope) {
+  
+  $scope.username = "markdelf";
+  $scope.chatRoom = "#malta";
+
   $scope.users = [
     {'username': 'markdelf', 'level': 'op' },
     {'username': 'gerrysaid', 'level': 'voice' },
@@ -18,7 +22,13 @@ ircApp.controller('ChatRoomCtrl', function ($scope) {
   $scope.onSendMessage = function() {
     var newText = $("#chatMessage").val();
     $("#chatMessage").val('');
-    $scope.chatHistory.push({'username': 'markdelf', 'created': '2014-12-09 20:23', 'message': newText});
+    $scope.chatHistory.push(
+        {
+            'username': $scope.username,
+            'created': moment().format('YYYY-MM-DD, HH:mm'),
+            'message': newText
+        }
+    );
   }
 });
 
