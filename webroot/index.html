@@ -1,13 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="ircApp">
   <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>IRC App</title>
 
     <!-- Bootstrap -->
-    <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="css/app.css" rel="stylesheet" />
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -16,7 +17,7 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
   </head>
-  <body>
+  <body ng-controller="ChatRoomCtrl">
     <div class="container-fluid">
       <div class="row">
         <div class="col-md-12">
@@ -39,19 +40,26 @@
             </div>
           </div>
         </div>
-        <div class="col-md-2 contact-list">
-          <div class="contact">@ Contact 1</div>
-          <div class="contact">@ Contact 2</div>
-          <div class="contact">+ Contact 3</div>
-          <div class="contact">Contact 4</div>
+        <div class="col-md-2 users-area">
+          <ul class="users-list">
+            <li ng-repeat="user in users">
+              <span ng-switch="user.level">
+                <span ng-switch-when="op">@</span>
+                <span ng-switch-when="voice">+</span>
+              </span>
+              <span>{{user.name}}</span>
+            </li>
+          </ul>
         </div>
       </div>
     </div>
     
+     <p>Nothing here {{'yet' + '!'}}</p>
 
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="bower_components/jquery/dist/jquery.min.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="bower_components/angular/angular.min.js"></script>
+    <script src="bower_components/angular-route/angular-route.min.js"></script>
+    <script src="js/app.js"></script>
   </body>
 </html>
