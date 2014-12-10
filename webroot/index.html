@@ -20,39 +20,46 @@
   <body ng-controller="ChatRoomCtrl">
     <div class="container-fluid">
       <div class="row chat-room-heading">
-        <div class="col-md-12">
-          <h1>{{chatRoom}}</h1>
-        </div>
+          <ul class="nav nav-tabs" ng-if="windows.length > 0">
+            <li ng-repeat="window in windows" ng-class="{active: $index==activeWindow}" ng-click="selectWindow($index)"><a class="nav" href="#tab-{{window.name}}"><span ng-if="window.type == 'chatroom'">#</span>{{window.name}} <span ng-click="closeWindow($index);" class="glyphicon glyphicon-remove"></span></a></li>
+          </ul>
       </div>
-      <div class="row chat-room-content">
-        <div class="col-md-10 chat-area">
-          <div class="chat-history">
-            <div class="message" ng-repeat="chatItem in chatHistory">
-              <span class="message-user">{{chatItem.username}}:</span> <span class="message-text">{{chatItem.message}}</span>
-              <span class="message-date">{{chatItem.created}}</span>
+      <div class="tab-content">
+        <div ng-repeat="window in windows" class="row chat-room-content tab-pane" ng-class="{active: $index==activeWindow}" id="tab-{{window.name}}">
+          <div class="chat-area" ng-class="{true:'col-md-10', false:'col-md-12'}[window.type == 'chatroom']">
+            <div class="chat-history">
+              <div class="message" ng-repeat="chatItem in window.chatHistory">
+                <span class="message-user">{{chatItem.username}}:</span> <span class="message-text">{{chatItem.message}}</span>
+                <span class="message-date">{{chatItem.created}}</span>
+              </div>
+            </div>
+            <div class="chat-control">
+              <form ng-submit="onSendMessage()">
+                <div class="input-group">
+                  <input type="text" class="form-control chatMessage" required="required" placeholder="Type your message here..." />
+                  <span class="input-group-btn">
+                    <button class="btn btn-success" type="submit">Send</button>
+                  </span>
+                </div>
+              </form>
             </div>
           </div>
-          <div class="chat-control">
-            <form ng-submit="onSendMessage()">
-              <div class="input-group">
-                <input type="text" class="form-control" id="chatMessage" required="required" placeholder="Type your message here..." />
-                <span class="input-group-btn">
-                  <button class="btn btn-success" type="submit">Send</button>
+          <div class="col-md-2 users-area" ng-if="window.type == 'chatroom'">
+            <ul class="users-list">
+              <li ng-repeat="user in window.users"
+              ng-class="{'bg-info text-info': isActive}"
+              ng-init="isActive = false"
+              ng-click="isActive = !isActive"
+              ng-dblclick="openConversation(user.username)"
+              >
+                <span ng-switch="user.level">
+                  <span ng-switch-when="op">@</span>
+                  <span ng-switch-when="voice">+</span>
                 </span>
-              </div>
-            </form>
+                <span>{{user.username}}</span>
+              </li>
+            </ul>
           </div>
-        </div>
-        <div class="col-md-2 users-area">
-          <ul class="users-list">
-            <li ng-repeat="user in users">
-              <span ng-switch="user.level">
-                <span ng-switch-when="op">@</span>
-                <span ng-switch-when="voice">+</span>
-              </span>
-              <span>{{user.username}}</span>
-            </li>
-          </ul>
         </div>
       </div>
     </div>
